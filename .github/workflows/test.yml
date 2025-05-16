@@ -19,6 +19,5 @@ jobs:
     steps:
       - name: Configure build
         uses: NgrDavid/configure-build@main
-        with:
         env:
           NODE_OPTIONS: --enable-source-maps
