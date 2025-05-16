@@ -1,0 +1,24 @@
+name: Test configure-build
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  run:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - name: Windows x64
+            os: windows-latest
+            rid: win-x64
+          - name: Ubuntu 22.04 x64
+            os: ubuntu-22.04
+            rid: linux-x64
+    name: Test setup-bonsai on ${{matrix.platform.name}}
+    runs-on: ${{matrix.platform.os}}
+    steps:
+      - name: Configure build
+        uses: NgrDavid/configure-build@main
+        with:
+        env:
+          NODE_OPTIONS: --enable-source-maps
