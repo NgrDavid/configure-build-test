@@ -29,6 +29,10 @@ jobs:
     name: Test setup-bonsai on ${{matrix.platform.name}}
     runs-on: ${{matrix.platform.os}}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
       - name: Configure build
         uses: NgrDavid/configure-build@main
         env:
