@@ -1,6 +1,11 @@
 name: Test configure-build
 on:
   push:
+    # This prevents tag pushes from triggering this workflow
+    branches: ['*']
+  pull_request:
+  release:
+    types: [published]
   workflow_dispatch:
 jobs:
   run:
