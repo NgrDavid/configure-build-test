@@ -1,4 +1,4 @@
-name: Test configure-build
+name: Test configure-build!!
 on:
   push:
     # This prevents tag pushes from triggering this workflow
