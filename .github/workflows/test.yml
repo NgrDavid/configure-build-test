@@ -20,20 +20,42 @@ jobs:
       fail-fast: false
       matrix:
         platform:
-          - name: Windows x64
-            os: windows-latest
-            rid: win-x64
+#          - name: Windows x64
+#            os: windows-latest
+#            rid: win-x64
           - name: Ubuntu 22.04 x64
             os: ubuntu-22.04
             rid: linux-x64
+        submodules: ['recursive', 'false']
     name: Test setup-bonsai on ${{matrix.platform.name}}
     runs-on: ${{matrix.platform.os}}
+    outputs:
+      need-workflow-image-render: ${{ steps.configure-build.outputs.need-workflow-image-render }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          submodules: recursive
+          submodules: ${{matrix.submodules}}
       - name: Configure build
+        id: configure-build
         uses: NgrDavid/configure-build@main
         env:
           NODE_OPTIONS: --enable-source-maps
+      - name: Need? ${{ steps.configure-build.outputs.need-workflow-image-render }}
+        run: echo ${{ steps.configure-build.outputs.need-workflow-image-render }}
+      - if: ${{ steps.configure-build.outputs.need-workflow-image-render }}
+        run: echo Need!
+      - if: ${{ steps.configure-build.outputs.need-workflow-image-render }}
+        run: echo Do not need!
+  if_enabled:
+    needs: run
+    if: ${{needs.run.outputs.need-workflow-image-render}}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "It was enabled!
+  if_disable:
+    needs: run
+    if: ${{!needs.run.outputs.need-workflow-image-render}}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "It was disabled :(
