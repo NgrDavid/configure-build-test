@@ -45,17 +45,17 @@ jobs:
         run: echo ${{ steps.configure-build.outputs.need-workflow-image-render }}
       - if: ${{ steps.configure-build.outputs.need-workflow-image-render }}
         run: echo Need!
-      - if: ${{ steps.configure-build.outputs.need-workflow-image-render }}
+      - if: ${{ !steps.configure-build.outputs.need-workflow-image-render }}
         run: echo Do not need!
   if_enabled:
     needs: run
     if: ${{needs.run.outputs.need-workflow-image-render}}
     runs-on: ubuntu-latest
     steps:
-      - run: echo "It was enabled!
+      - run: echo "It was enabled!"
   if_disable:
     needs: run
     if: ${{!needs.run.outputs.need-workflow-image-render}}
     runs-on: ubuntu-latest
     steps:
-      - run: echo "It was disabled :(
+      - run: echo "It was disabled :("
