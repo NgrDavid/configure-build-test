@@ -52,10 +52,10 @@ jobs:
     if: ${{needs.run.outputs.need-workflow-image-render}}
     runs-on: ubuntu-latest
     steps:
-      - run: echo "It was enabled!"
+      - run: echo "It was enabled!  '${{needs.run.outputs.need-workflow-image-render}}'"
   if_disable:
     needs: run
     if: ${{!needs.run.outputs.need-workflow-image-render}}
     runs-on: ubuntu-latest
     steps:
-      - run: echo "It was disabled :("
+      - run: echo "It was disabled :(  '${{needs.run.outputs.need-workflow-image-render}}'"
